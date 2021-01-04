@@ -22,12 +22,15 @@ describe("01-javascript-drum-kit", () => {
     });
   });
 
-  test("adds yellow border when a is clicked", () => {
+  test("adds yellow border when each key on the screen is clicked", () => {
     render(<JavaScriptDrumKit />);
 
-    userEvent.click(screen.queryByText(keyArray[0].keyAlphabet.toUpperCase()));
+    keyArray.forEach(({ keyAlphabet }) => {
+      const keyButton = screen.queryByText(keyAlphabet.toUpperCase());
+      userEvent.click(keyButton);
 
-    const keyNameA = screen.queryByTestId("keyName-a");
-    expect(keyNameA).toHaveProperty("className", "key playing");
+      const keyName = screen.queryByTestId(`keyName-${keyAlphabet}`);
+      expect(keyName).toHaveProperty("className", "key playing");
+    });
   });
 });
