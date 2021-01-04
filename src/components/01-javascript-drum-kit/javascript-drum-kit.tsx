@@ -38,6 +38,10 @@ export const JavaScriptDrumKit: React.FC = () => {
 
   React.useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   return (
