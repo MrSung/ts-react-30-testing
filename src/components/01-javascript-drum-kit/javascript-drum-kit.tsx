@@ -1,16 +1,16 @@
 import * as React from "react";
 import "./style.css";
 
-const keyArray = [
-  { keyNumber: "65", keyAlphabet: "A", keySoundName: "clap" },
-  { keyNumber: "83", keyAlphabet: "S", keySoundName: "hihat" },
-  { keyNumber: "68", keyAlphabet: "D", keySoundName: "kick" },
-  { keyNumber: "70", keyAlphabet: "F", keySoundName: "openhat" },
-  { keyNumber: "71", keyAlphabet: "G", keySoundName: "boom" },
-  { keyNumber: "72", keyAlphabet: "H", keySoundName: "ride" },
-  { keyNumber: "74", keyAlphabet: "J", keySoundName: "snare" },
-  { keyNumber: "75", keyAlphabet: "K", keySoundName: "tom" },
-  { keyNumber: "76", keyAlphabet: "L", keySoundName: "tink" },
+export const keyArray = [
+  { keyAlphabet: "a", keySoundName: "clap" },
+  { keyAlphabet: "s", keySoundName: "hihat" },
+  { keyAlphabet: "d", keySoundName: "kick" },
+  { keyAlphabet: "f", keySoundName: "openhat" },
+  { keyAlphabet: "g", keySoundName: "boom" },
+  { keyAlphabet: "h", keySoundName: "ride" },
+  { keyAlphabet: "j", keySoundName: "snare" },
+  { keyAlphabet: "k", keySoundName: "tom" },
+  { keyAlphabet: "l", keySoundName: "tink" },
 ];
 
 export const JavaScriptDrumKit: React.FC = () => {
@@ -20,13 +20,14 @@ export const JavaScriptDrumKit: React.FC = () => {
     ev.currentTarget.classList.add("playing");
   };
   const handleKeyDown = (ev: KeyboardEventInit) => {
-    const keyCode = String(ev.keyCode);
-    if (!keyArray.map(({ keyNumber }) => keyNumber).includes(keyCode)) {
+    const keyName = String(ev.key);
+
+    if (!keyArray.map(({ keyAlphabet }) => keyAlphabet).includes(keyName)) {
       return;
     }
 
     const key = keysWrapperRef.current.querySelector(
-      `div[data-key="${keyCode}"]`,
+      `div[data-key="${keyName}"]`,
     );
     key.classList.add("playing");
   };
@@ -46,16 +47,16 @@ export const JavaScriptDrumKit: React.FC = () => {
 
   return (
     <div className="keys" ref={keysWrapperRef}>
-      {keyArray.map(({ keyNumber, keyAlphabet, keySoundName }) => (
+      {keyArray.map(({ keyAlphabet, keySoundName }) => (
         <div
-          data-key={keyNumber}
+          data-key={keyAlphabet}
           className="key"
-          key={keyNumber}
+          key={keyAlphabet}
           onClick={handleClick}
           onKeyDown={handleKeyDown}
           onTransitionEnd={handleTransitionEnd}
         >
-          <kbd>{keyAlphabet}</kbd>
+          <kbd>{keyAlphabet.toUpperCase()}</kbd>
           <span className="sound">{keySoundName}</span>
         </div>
       ))}
