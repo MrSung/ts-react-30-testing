@@ -29,7 +29,8 @@
     "start": "yarn run start-dev",
     "start-dev": "webpack-dev-server --config=configs/webpack/dev.js",
     "start-prod": "yarn run build && node express.js",
-    "test": "jest --coverage --watchAll --config=configs/jest.json"
+    "test:all": "jest --coverage --watchAll --config=configs/jest.json",
+    "test:components": "jest -- src/components/**/*.test.tsx"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.8",
@@ -66,6 +67,7 @@
     "rimraf": "^3.0.2",
     "sass-loader": "^10.1.0",
     "style-loader": "^2.0.0",
+    "ts-jest": "^26.4.4",
     "typescript": "^3.9.7",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.43.0",
