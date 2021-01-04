@@ -19,7 +19,7 @@ export const JavaScriptDrumKit: React.FC = () => {
   const handleClick = (ev: React.MouseEvent<HTMLDivElement>) => {
     ev.currentTarget.classList.add("playing");
   };
-  const handleKeyDown = (ev: any) => {
+  const handleKeyDown = (ev: KeyboardEventInit) => {
     const keyCode = String(ev.keyCode);
     if (!keyArray.map(({ keyNumber }) => keyNumber).includes(keyCode)) {
       return;
