@@ -8,7 +8,7 @@ describe("01-javascript-drum-kit", () => {
     render(<JavaScriptDrumKit />);
 
     keyArray.forEach(({ keyAlphabet }) => {
-      const text = screen.queryByText(keyAlphabet.toUpperCase());
+      const text = screen.getByText(keyAlphabet.toUpperCase());
       expect(text).toBeDefined();
     });
   });
@@ -17,7 +17,7 @@ describe("01-javascript-drum-kit", () => {
     render(<JavaScriptDrumKit />);
 
     keyArray.forEach(({ keySoundName }) => {
-      const text = screen.queryByText(new RegExp(keySoundName, "i"));
+      const text = screen.getByText(new RegExp(keySoundName, "i"));
       expect(text).toBeDefined();
     });
   });
@@ -26,10 +26,10 @@ describe("01-javascript-drum-kit", () => {
     render(<JavaScriptDrumKit />);
 
     keyArray.forEach(async ({ keyAlphabet }) => {
-      const keyButton = screen.queryByText(keyAlphabet.toUpperCase());
+      const keyButton = screen.getByText(keyAlphabet.toUpperCase());
       userEvent.click(keyButton);
 
-      const keyName = screen.queryByTestId(`keyName-${keyAlphabet}`);
+      const keyName = screen.getByTestId(`keyName-${keyAlphabet}`);
       expect(keyName).toHaveProperty("className", "key playing");
 
       await waitFor(() => {
