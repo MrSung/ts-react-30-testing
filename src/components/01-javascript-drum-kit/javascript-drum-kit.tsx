@@ -50,6 +50,7 @@ export const JavaScriptDrumKit: React.FC = () => {
       {keyArray.map(({ keyAlphabet, keySoundName }) => (
         <div
           data-key={keyAlphabet}
+          data-testid={`keyName-${keyAlphabet}`}
           className="key"
           key={keyAlphabet}
           onClick={handleClick}
