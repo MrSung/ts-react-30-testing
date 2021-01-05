@@ -10,7 +10,7 @@ html {
   box-sizing: inherit;
 }
 
-input {
+.search-form input {
   width: 100%;
   padding: 20px;
 }
@@ -20,7 +20,7 @@ input {
   margin: 50px auto;
 }
 
-input.search {
+.search-form .search {
   margin: 0;
   text-align: center;
   outline: 0;
@@ -65,10 +65,10 @@ input.search {
   background: linear-gradient(to top,  #ffffff 0%,#EFEFEF 100%);
 }
 
-span.population {
+.suggestions .population {
   font-size: 15px;
 }
 
-.hl {
+.suggestions .hl {
   background: #ffc600;
 }

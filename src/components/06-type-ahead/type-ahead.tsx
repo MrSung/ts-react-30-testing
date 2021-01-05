@@ -47,10 +47,8 @@ const numberWithCommas = (x: string) =>
 export const TypeAhead: React.FC = () => {
   const [inputText, setInputText] = React.useState("");
   const { cities } = useFetchCities();
-  // const inputTextRegExp = React.useMemo(() => new RegExp(inputText, "gi"), [
-  //   inputText,
-  // ]);
-  const matchCities = React.useMemo(() => findMatches(inputText, cities), [
+  const inputTextRegExp = new RegExp(inputText, "gi");
+  const matchedCities = React.useMemo(() => findMatches(inputText, cities), [
     inputText,
     cities,
   ]);
@@ -60,7 +58,7 @@ export const TypeAhead: React.FC = () => {
   };
 
   return (
-    <form className="search-form">
+    <form className="search-form" autoComplete="off">
       <input
         type="text"
         className="search"
@@ -69,17 +67,31 @@ export const TypeAhead: React.FC = () => {
         onChange={handleInputChange}
       />
       <ul className="suggestions">
-        {inputText === "" || matchCities.length === 0 ? (
+        {inputText === "" || matchedCities.length === 0 ? (
           <>
             <li>Filter for a city</li>
             <li>or a state</li>
           </>
         ) : (
-          matchCities.map((mc, i) => {
+          matchedCities.map((mc, i) => {
             return (
               <li key={mc.city + i}>
-                <span className="name">
-                  {mc.city}, {mc.state}
+                <span
+                  className="name"
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      mc.city.replace(
+                        inputTextRegExp,
+                        `<span class="hl">${inputText}</span>`,
+                      ) +
+                      ", " +
+                      mc.state.replace(
+                        inputTextRegExp,
+                        `<span class="hl">${inputText}</span>`,
+                      ),
+                  }}
+                >
+                  {/* {mc.city}, {mc.state} */}
                 </span>
                 <span className="population">
                   ${numberWithCommas(mc.population)}
