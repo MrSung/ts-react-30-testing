@@ -10,4 +10,5 @@ module.exports = {
     "^.+\\.(ts|tsx)$": "ts-jest",
     ".+\\.(css|sass|scss)$": "jest-css-modules-transform"
   },
+  "setupFilesAfterEnv": ["./jest.setup.js"]
 }
