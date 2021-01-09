@@ -24,11 +24,11 @@ export const useFetchCities = (): IUserFetchCitiesReturnType => {
   const [cities, setCities] = React.useState([]);
 
   React.useEffect(() => {
-    fetch(endpoint)
-      .then((blob) => blob.json())
-      .then((data) => {
-        setCities((a) => [...a, ...data]);
-      });
+    (async () => {
+      const blob = await fetch(endpoint);
+      const data = await blob.json();
+      setCities((a) => [...a, ...data]);
+    })();
   }, [setCities]);
 
   return {
@@ -90,9 +90,7 @@ export const TypeAhead: React.FC = () => {
                         `<span class="hl">${inputText}</span>`,
                       ),
                   }}
-                >
-                  {/* {mc.city}, {mc.state} */}
-                </span>
+                />
                 <span className="population">
                   ${numberWithCommas(mc.population)}
                 </span>
