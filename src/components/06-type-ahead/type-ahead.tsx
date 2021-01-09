@@ -22,13 +22,18 @@ export interface IUserFetchCitiesReturnType {
 
 export const useFetchCities = (): IUserFetchCitiesReturnType => {
   const [cities, setCities] = React.useState([]);
+  const fetchCities = async () => {
+    const blob = await fetch(endpoint);
+    const data = await blob.json();
+    setCities((a) => [...a, ...data]);
+  };
 
   React.useEffect(() => {
-    (async () => {
-      const blob = await fetch(endpoint);
-      const data = await blob.json();
-      setCities((a) => [...a, ...data]);
-    })();
+    fetchCities();
+
+    return () => {
+      setCities([]);
+    };
   }, [setCities]);
 
   return {
@@ -69,8 +74,8 @@ export const TypeAhead: React.FC = () => {
       <ul className="suggestions">
         {inputText === "" || matchedCities.length === 0 ? (
           <>
-            <li>Filter for a city</li>
-            <li>or a state</li>
+            <li data-testid="list-initial-first">Filter for a city</li>
+            <li data-testid="list-initial-second">or a state</li>
           </>
         ) : (
           matchedCities.map((mc, i) => {
