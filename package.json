@@ -60,6 +60,7 @@
     "imagemin-gifsicle": "6.0.1",
     "jest": "^26.6.3",
     "jest-css-modules-transform": "^4.1.0",
+    "jest-styled-components": "^7.0.3",
     "node-sass": "^4.14.1",
     "prettier": "^2.2.1",
     "react": "^17.0.1",
@@ -78,5 +79,7 @@
     "webpack-merge": "^4.2.2",
     "whatwg-fetch": "^3.5.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "styled-components": "^5.2.1"
+  }
 }
