@@ -17,47 +17,48 @@ const checkboxTextMap: Map<number, string> = new Map([
 ]);
 
 export const HoldShiftCheckboxes: React.FC = () => {
-  const inboxRef = React.useRef<HTMLDivElement>(null);
+  const inboxRef = React.useRef<HTMLInputElement>(null);
   const [lastCheckedId, setLastCheckedId] = React.useState<number | null>(null);
 
-  const handleCheck = (
-    ev: React.ChangeEvent<HTMLInputElement>,
+  const handleClick = (
+    ev: React.MouseEvent<HTMLInputElement>,
     currentId: number,
   ) => {
+    ev.stopPropagation();
+    const $currentCheckbox = inboxRef.current.querySelector<HTMLInputElement>(
+      `#checkbox-${currentId}`,
+    );
     let inBetween = false;
-    console.log("ev.shiftKey ", ev.shiftKey);
-    console.log("ev.target.checked ", ev.target.checked);
-    // @ts-expect-error: KeyboardEvent type annotation not included
-    if (!ev.shiftKey || !ev.target.checked) {
-      return;
+    if (ev.shiftKey && $currentCheckbox.checked) {
+      console.log("checking...");
+      [...checkboxTextMap].forEach(([id]) => {
+        if (Number(id) === currentId || Number(id) === lastCheckedId) {
+          inBetween = !inBetween;
+          console.log("Starting to check them in between!");
+        }
+        if (inBetween) {
+          console.log("inBetween true");
+          inboxRef.current.querySelector<HTMLInputElement>(
+            `#checkbox-${id}`,
+          ).checked = true;
+        }
+      });
     }
-    [...checkboxTextMap].forEach(([id]) => {
-      if (Number(id) === currentId || Number(id) === lastCheckedId) {
-        inBetween = !inBetween;
-        console.log("Starting to check them in between!");
-      }
-      if (inBetween) {
-        inboxRef.current.querySelector<HTMLInputElement>(
-          `#checkbox-${id}`,
-        ).checked = true;
-        console.log("inBetween true");
-      }
-    });
     setLastCheckedId(currentId);
   };
 
   return (
     <Inbox ref={inboxRef}>
       {[...checkboxTextMap].map(([id, text]) => (
-        <Item key={id}>
+        <CheckboxWrap key={id}>
           <CheckboxInput
             type="checkbox"
             name={`checkbox-${id}`}
             id={`checkbox-${id}`}
-            onChange={(ev) => handleCheck(ev, id)}
+            onClick={(ev) => handleClick(ev, id)}
           />
-          <CheckboxLabel htmlFor={`checkbox-${id}`}>{text}</CheckboxLabel>
-        </Item>
+          <CheckboxLabelText>{text}</CheckboxLabelText>
+        </CheckboxWrap>
       ))}
     </Inbox>
   );
@@ -71,7 +72,7 @@ const Inbox = styled.div`
   box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.1);
 `;
 
-const Item = styled.div`
+const CheckboxWrap = styled.div`
   display: flex;
   align-items: center;
 
@@ -84,7 +85,7 @@ const CheckboxInput = styled.input`
   margin: 20px;
 `;
 
-const CheckboxLabel = styled.label`
+const CheckboxLabelText = styled.p`
   margin: 0;
   padding: 20px;
   transition: background 0.2s;
