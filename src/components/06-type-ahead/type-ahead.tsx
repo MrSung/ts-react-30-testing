@@ -74,8 +74,8 @@ export const TypeAhead: React.FC = () => {
       <ul className="suggestions">
         {inputText === "" || matchedCities.length === 0 ? (
           <>
-            <li data-testid="list-initial-first">Filter for a city</li>
-            <li data-testid="list-initial-second">or a state</li>
+            <li>Filter for a city</li>
+            <li>or a state</li>
           </>
         ) : (
           matchedCities.map((mc, i) => {
