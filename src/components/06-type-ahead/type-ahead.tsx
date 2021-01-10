@@ -1,4 +1,5 @@
 import * as React from "react";
+import styled from "styled-components";
 import "./style.css";
 
 export const endpoint =
@@ -63,24 +64,24 @@ export const TypeAhead: React.FC = () => {
   };
 
   return (
-    <form className="search-form" autoComplete="off">
-      <input
+    <SearchForm autoComplete="off">
+      <SearchInput
         type="text"
         className="search"
         placeholder="City or State"
         value={inputText}
         onChange={handleInputChange}
       />
-      <ul className="suggestions">
+      <SuggestList>
         {inputText === "" || matchedCities.length === 0 ? (
           <>
-            <li>Filter for a city</li>
-            <li>or a state</li>
+            <SuggestItem>Filter for a city</SuggestItem>
+            <SuggestItem>or a state</SuggestItem>
           </>
         ) : (
           matchedCities.map((mc, i) => {
             return (
-              <li key={mc.city + i}>
+              <SuggestItem key={mc.city + i}>
                 <span
                   className="name"
                   dangerouslySetInnerHTML={{
@@ -96,14 +97,73 @@ export const TypeAhead: React.FC = () => {
                       ),
                   }}
                 />
-                <span className="population">
-                  ${numberWithCommas(mc.population)}
-                </span>
-              </li>
+                <Population>${numberWithCommas(mc.population)}</Population>
+              </SuggestItem>
             );
           })
         )}
-      </ul>
-    </form>
+      </SuggestList>
+    </SearchForm>
   );
 };
+
+const SearchForm = styled.form`
+  max-width: 400px;
+  margin: 50px auto;
+
+  input {
+    width: 100%;
+    padding: 20px;
+  }
+`;
+
+const SearchInput = styled.input`
+  margin: 0;
+  text-align: center;
+  outline: 0;
+  border: 10px solid #f7f7f7;
+  width: 120%;
+  position: relative;
+  top: 10px;
+  z-index: 2;
+  border-radius: 5px;
+  font-size: 40px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.19);
+`;
+
+const SuggestList = styled.ul`
+  margin: 8px 0 0;
+  padding: 0;
+  position: relative;
+`;
+
+const SuggestItem = styled.li`
+  background: white;
+  list-style: none;
+  border-bottom: 1px solid #d8d8d8;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.14);
+  margin: 0;
+  padding: 20px;
+  transition: background 0.2s;
+  display: flex;
+  justify-content: space-between;
+  text-transform: capitalize;
+
+  &:nth-of-type(even) {
+    transform: perspective(100px) rotateX(3deg) translateY(2px) scale(1.001);
+    background: linear-gradient(to bottom, #ffffff 0%, #efefef 100%);
+  }
+
+  &:nth-of-type(odd) {
+    transform: perspective(100px) rotateX(-3deg) translateY(3px);
+    background: linear-gradient(to top, #ffffff 0%, #efefef 100%);
+  }
+
+  .hl {
+    background: #ffc600;
+  }
+`;
+
+const Population = styled.span`
+  font-size: 15px;
+`;
