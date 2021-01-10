@@ -82,6 +82,8 @@ const CheckboxWrap = styled.div`
 `;
 
 const CheckboxInput = styled.input`
+  width: 44px;
+  height: 44px;
   margin: 20px;
 `;
 
