@@ -25,19 +25,16 @@ export const HoldShiftCheckboxes: React.FC = () => {
     currentId: number,
   ) => {
     ev.stopPropagation();
+    let inBetween = false;
     const $currentCheckbox = inboxRef.current.querySelector<HTMLInputElement>(
       `#checkbox-${currentId}`,
     );
-    let inBetween = false;
     if (ev.shiftKey && $currentCheckbox.checked) {
-      console.log("checking...");
       [...checkboxTextMap].forEach(([id]) => {
         if (Number(id) === currentId || Number(id) === lastCheckedId) {
           inBetween = !inBetween;
-          console.log("Starting to check them in between!");
         }
         if (inBetween) {
-          console.log("inBetween true");
           inboxRef.current.querySelector<HTMLInputElement>(
             `#checkbox-${id}`,
           ).checked = true;
