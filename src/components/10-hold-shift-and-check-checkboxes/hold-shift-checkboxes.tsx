@@ -87,7 +87,7 @@ const CheckboxInput = styled.input`
 const CheckboxLabelText = styled.p`
   margin: 0;
   padding: 20px;
-  transition: background 0.2s;
+  transition: background-color 0.2s;
   flex: 1;
   font-family: "helvetica neue";
   font-size: 20px;
@@ -98,6 +98,8 @@ const CheckboxLabelText = styled.p`
     display: none;
   }
 
-  /* background: #f9f9f9;
-  text-decoration: line-through; */
+  ${CheckboxInput}:checked + & {
+    background-color: #f9f9f9;
+    text-decoration: line-through;
+  }
 `;
