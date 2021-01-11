@@ -52,9 +52,12 @@ export const HoldShiftCheckboxes: React.FC = () => {
             type="checkbox"
             name={`checkbox-${id}`}
             id={`checkbox-${id}`}
+            data-testid={`checkbox-${id}`}
             onClick={(ev) => handleClick(ev, id)}
           />
-          <CheckboxLabelText>{text}</CheckboxLabelText>
+          <CheckboxLabelText data-testid={`label-${id}`}>
+            {text}
+          </CheckboxLabelText>
         </CheckboxWrap>
       ))}
     </Inbox>
